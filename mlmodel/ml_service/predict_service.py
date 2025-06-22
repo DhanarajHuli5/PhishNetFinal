@@ -14,6 +14,18 @@ app = FastAPI(
     description="Analyzes URLs for phishing and provides detailed security information."
 )
 
+from fastapi.middleware.cors import CORSMiddleware
+
+# Add this immediately after `app = FastAPI(...)`
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=["*"],  # Or ["http://localhost:5173"] to allow only your frontend
+    allow_credentials=True,
+    allow_methods=["*"],
+    allow_headers=["*"],
+)
+
+
 MODEL_PATH = os.path.join(os.path.dirname(__file__), 'phishing_lr_model.joblib')
 
 # Load model at startup
